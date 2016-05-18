@@ -1,4 +1,4 @@
-# Computational-neuroscience
+# Identification algorithm
 
 This project shows the ionic channel parameter identification algorithm I settled during my scientific period. It presents the first part of a study published in Michel CB et al., Eur J Neurosci. 2015 Nov;42(10):2867-77. doi: 10.1111/ejn.13021. Epub 2015 Aug 6. Identification and modelling of fast and slow Ih current components in vestibular ganglion neurons.
 
