@@ -1,8 +1,9 @@
+# This algorithm has been tested on hyperpolarisation activated cation currents for to evaluate independently 
+# the effects of both Ih components in the vestibular nerve
 # see Michel CB et al., Eur J Neurosci. 2015 Nov;42(10):2867-77. doi: 10.1111/ejn.13021. Epub 2015 Aug 6.
 # Identification and modelling of fast and slow Ih current components in vestibular ganglion neurons.
 # Python 2.7+ is required
-# This algorithm has been tested on hyperpolarisation activated cation currents for to evaluate independently 
-# the effects of both Ih components in the vestibular nerve
+
 
 from __future__ import division
 from pylab import *
@@ -11,26 +12,25 @@ from scipy.integrate import odeint
 from numpy.random import *
 ion()
 
-def ActivationCurve(V, Vh, k):
 # these two curves are called characteristics curves and model the activation...
+def ActivationCurve(V, Vh, k):
+  # Vh is the half activation, k is the slope
   return 1/(1+exp(-(V-Vh)/k))
-    # Vh is the half activation, k is the slope
 
+# ... and the kinetics of the ionic channel against voltage
 def Kinetic(V, Vmax, sigma, Camp, Cbase): 
-  # ... and the kinetics of the ionic channel against voltage
-  return Cbase + Camp*exp(-(Vmax-V)**2/sigma**2)
   # bell-shaped curve centred in Vmax, with amplitude Camp, width sigma, and offset Cbase
+  return Cbase + Camp*exp(-(Vmax-V)**2/sigma**2)
 
-def Gate(x,t):
   # this equation modelize the opening of a channel, given the membrane potential and the two precedent equations
+def Gate(x,t):
   global pars
   xinf = ActivationCurve(V[:,1], pars[0], pars[1])
   tau = Kinetic(V[:,1], pars[2], pars[3], pars[4], pars[5])
   return (xinf-x)/tau
 
-def FullTrace(p,time,y):
   # the following function is the optimisation part of the algorithm. The two chanels are modeled with initial conditions 
-  # and the result is compared to the data, taking account the parameter physiological ranges for identification
+  # and the result is compared to the data, taking account the parameter physiological ranges for identificationdef FullTrace(p,time,y):
   global pars
   pars = p[0:6]
   rinit1 = ActivationCurve(V[:,0], pars[0], pars[1]) # initial values
@@ -45,8 +45,8 @@ def FullTrace(p,time,y):
   plot(time,I,'--r');hold(False)
   draw()
   
-  A = 0
   # this part is added to constrain the algorithm with physiological search ranges
+  A = 0
   for a in arange(len(p)):
     if p[a] > HB[a] :
       A = A + (p[a] - HB[a])*1e8
@@ -56,7 +56,7 @@ def FullTrace(p,time,y):
 
 global pars
   
-# The first part of the code is for the modelling of the data to fit (the algorithm is firt tested on simulated data) 
+# The first part of the code is for the data modelling to fit (the algorithm is firt tested on simulated data) 
 # voltage clamp protocol given rise to the currents
 V = array([[-50, -60],[-50, -70],[-50, -80],[-50, -90],[-50, -100],\
 [-50, -110],[-50, -120],[-50, -130],[-50, -140],[-50, -150]])
