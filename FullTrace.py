@@ -106,27 +106,32 @@ for NbRandTries in arange(0,10):
   Vplot = arange(-180,-50)
   # results are plotted for each individual try
 
-  subplot(2,1,1)
   # for the activation curve
+  subplot(2,1,1)
   hold(True)
-  # for activation 1...
-  plot(Vplot,ActivationCurve(Vplot, parId[0], parId[1]),'k',linewidth = 0.5)
-  # ... and activation 2
-  plot(Vplot,ActivationCurve(Vplot, parId[7], parId[8]),'k',linewidth = 0.5)
   
-  # and for the kinetic curve
+  plot(Vplot,ActivationCurve(Vplot, parId[0], parId[1]),'k',linewidth = 0.5)
+  # for activation 1...
+
+  plot(Vplot,ActivationCurve(Vplot, parId[7], parId[8]),'k',linewidth = 0.5)
+  # ... and activation 2
+  
   subplot(2,1,2)
+  # and for the kinetic curve
   hold(True)
-  # for kinetic 1...
+  
   plot(Vplot,Kinetic(Vplot, parId[2], parId[3], parId[4], parId[5]),'k',linewidth = 0.5)
-  # ... and kinetic 2
+  # for kinetic 1...
+
   plot(Vplot,Kinetic(Vplot, parId[9], parId[10], parId[11], parId[12]),'k',linewidth = 0.5)
+  # ... and kinetic 2
   
   draw()
 
-# the good results (determined from first mode of the goodness of fit histogram) are averaged and plotted
 subplot(2,1,1)
 hold(True)
+# the good results (determined from first mode of the goodness of fit histogram) are averaged and plotted
+
 plot(Vplot,ActivationCurve(Vplot, par1[0], par1[1]),'r')
 plot(Vplot,ActivationCurve(Vplot, par2[0], par2[1]),'r')
 
